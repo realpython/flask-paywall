@@ -13,6 +13,8 @@ Setup a paywall with Flask and Stripe to offer paid access to your premium conte
 
 ## QuickStart
 
+### Rename *config_sample.py* as *config.py*
+
 ### Set Environment Variables
 
 ```sh
