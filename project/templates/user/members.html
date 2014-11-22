@@ -1,0 +1,57 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<h1>Member's page</h1>
+
+<br>
+
+<p>
+  <span>Have you paid?</span>
+  {% if current_user.paid %}
+    <strong>Yes.</strong>
+  {% else %}
+    <strong>No.</strong>
+    <h2>Puchase</h2>
+    <form action="" method="POST" role="form" id="payment-form" data-stripe-publishable-key={{key}}>
+      <div id="errors">
+        <br>
+        <span class='payment-errors alert-danger alert'></span>
+        <br><br>
+      </div>
+      <br>
+      {{ form.csrf_token }}
+      <p>
+        {{ form.card_number.label }}
+        <br>
+        {{ form.card_number(placeholder="4242424242424242", **{'data-stripe': 'number'}) }}
+      </p>
+      <p>
+        {{ form.cvc.label }}
+        <br>
+        {{ form.cvc(placeholder="456", **{'data-stripe': 'cvc'}) }}
+      </p>
+      <p>
+        {{ form.expiration_month.label }}
+        <br>
+        {{ form.expiration_month(placeholder="12", **{'data-stripe': 'exp_month'}) }}
+      </p>
+      <p>
+        {{ form.expiration_year.label }}
+        <br>
+        {{ form.expiration_year(placeholder="2017", **{'data-stripe': 'exp_year'}) }}
+      </p>
+      <button class="btn btn-success" type="submit">Submit Payment » $5</button>
+    </form>
+  {% endif %}
+</p>
+
+<br>
+
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+  <script src="{{url_for('static', filename='member.js')}}" type="text/javascript"></script>
+{% endblock %}
+

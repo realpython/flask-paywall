@@ -1,0 +1,8 @@
+*.pyc
+*.sqlite
+.DS_Store
+.coverage
+env
+migrations
+tmp
+config.py
