@@ -26,4 +26,6 @@ paramiko==1.15.1
 psycopg2==2.5.4
 py-bcrypt==0.4
 pycrypto==2.6.1
+requests==2.4.3
+stripe==1.19.1
 wsgiref==0.1.2
