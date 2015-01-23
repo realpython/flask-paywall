@@ -35,8 +35,12 @@
 
         {{ wtf.form_field(form.card_number, **{'data-stripe': 'number'}) }}
         {{ wtf.form_field(form.cvc, **{'data-stripe': 'cvc'}) }}
-        {{ wtf.form_field(form.expiration_month, **{'data-stripe': 'exp_month'}) }}
-        {{ wtf.form_field(form.expiration_year, **{'data-stripe': 'exp_year'}) }}
+        <span class="col-lg-8 col-sm-8">
+          {{ wtf.form_field(form.expiration_month, **{'data-stripe': 'exp_month'}) }}
+        </span>
+        <span class="col-lg-4 col-sm-4">
+          {{ wtf.form_field(form.expiration_year, **{'data-stripe': 'exp_year'}) }}
+        </span>
 
         <br>
 

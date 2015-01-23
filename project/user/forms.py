@@ -2,7 +2,7 @@
 
 
 from flask_wtf import Form
-from wtforms import TextField, PasswordField
+from wtforms import TextField, PasswordField, SelectField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 from project.models import User
@@ -41,11 +41,11 @@ class RegisterForm(Form):
         'CVC Code',
         validators=[DataRequired()]
     )
-    expiration_month = TextField(
+    expiration_month = SelectField(
         'Expiration Month',
         validators=[DataRequired()]
     )
-    expiration_year = TextField(
+    expiration_year = SelectField(
         'Expiration Year', validators=[DataRequired()]
     )
 
