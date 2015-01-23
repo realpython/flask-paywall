@@ -4,8 +4,7 @@ Setup a paywall with Flask and Stripe to offer paid access to your premium conte
 
 ## Workflow
 
-1. User registers and pays
-3. User obtains access to premium content
+After user register and pays (from the same form), s/he has access to premium content.
 
 ## QuickStart
 
