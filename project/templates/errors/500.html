@@ -1,6 +1,12 @@
 {% extends "_base.html" %}
+
+{% block page_title %}- Server Error{% endblock %}
+
 {% block content %}
-<h1>500</h1>
-<p>Something's wrong! We are on the job.</p>
-<p><em>Return <a href="{{url_for('main.home')}}">Home</a>?</em></p>
+<div class="jumbotron">
+  <div class="text-center">
+    <h1>500</h1>
+    <p>Sorry. Something went terribly wrong. Go <a href="{{ url_for('main.home')}}">home</a>.</p>
+  </div>
+</div>
 {% endblock %}

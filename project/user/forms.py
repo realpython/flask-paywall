@@ -9,21 +9,44 @@ from project.models import User
 
 
 class LoginForm(Form):
-    email = TextField('Email Address', [DataRequired(), Email()])
-    password = PasswordField('Password', [DataRequired()])
+    email = TextField(
+        'Email Address', validators=[DataRequired(), Email()]
+    )
+    password = PasswordField(
+        'Password', validators=[DataRequired()]
+    )
 
 
 class RegisterForm(Form):
     email = TextField(
         'Email Address',
-        [DataRequired(), Email(message=None), Length(min=6, max=40)])
+        validators=[DataRequired(), Email(message=None), Length(min=6, max=40)]
+    )
     password = PasswordField(
         'Password',
-        [DataRequired(), Length(min=6, max=25)]
+        validators=[DataRequired(), Length(min=6, max=25)]
     )
     confirm = PasswordField(
-        'Repeat password',
-        [DataRequired(), EqualTo('password', message='Passwords must match.')]
+        'Confirm password',
+        validators=[
+            DataRequired(),
+            EqualTo('password', message='Passwords must match.')
+        ]
+    )
+    card_number = TextField(
+        'Credit Card Number',
+        validators=[DataRequired()]
+    )
+    cvc = TextField(
+        'CVC Code',
+        validators=[DataRequired()]
+    )
+    expiration_month = TextField(
+        'Expiration Month',
+        validators=[DataRequired()]
+    )
+    expiration_year = TextField(
+        'Expiration Year', validators=[DataRequired()]
     )
 
     def validate(self):
@@ -35,10 +58,3 @@ class RegisterForm(Form):
             self.email.errors.append("Email already registered")
             return False
         return True
-
-
-class StripeForm(Form):
-    card_number = TextField('Credit Card Number',)
-    cvc = TextField('CVC Code',)
-    expiration_month = TextField('Expiration Month',)
-    expiration_year = TextField('Expiration Year')

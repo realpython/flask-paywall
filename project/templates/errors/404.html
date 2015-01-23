@@ -1,6 +1,12 @@
 {% extends "_base.html" %}
+
+{% block page_title %}- Page Not Found{% endblock %}
+
 {% block content %}
-<h1>404</h1>
-<p>There's nothing here!</p>
-<p><em>Return <a href="{{url_for('main.home')}}">Home</a>?</em></p>
+<div class="jumbotron">
+  <div class="text-center">
+    <h1>404</h1>
+    <p>Sorry. The requested page doesn't exist. Go <a href="{{ url_for('main.home')}}">home</a>.</p>
+  </div>
+</div>
 {% endblock %}

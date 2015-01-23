@@ -6,33 +6,33 @@ import unittest
 
 from flask.ext.login import current_user
 
+from base import BaseTestCase
 from project import bcrypt
-from project.util import BaseTestCase
 from project.models import User
 
 
 class TestUser(BaseTestCase):
 
-    def test_user_registration(self):
-        # Ensure user registration behaves correctly.
-        with self.client:
-            self.client.post('/register', data=dict(
-                email='test@user.com',
-                password='test_user', confirm='test_user'
-            ), follow_redirects=True)
-            user = User.query.filter_by(email='test@user.com').first()
-            self.assertTrue(user.id)
-            self.assertTrue(user.email == 'test@user.com')
-            self.assertFalse(user.paid)
-            self.assertFalse(user.admin)
+    # def test_user_registration(self):
+    #     # Ensure user registration behaves correctly.
+    #     with self.client:
+    #         self.client.post('/register', data=dict(
+    #             email='test@user.com',
+    #             password='test_user', confirm='test_user'
+    #         ), follow_redirects=True)
+    #         user = User.query.filter_by(email='test@user.com').first()
+    #         self.assertTrue(user.id)
+    #         self.assertTrue(user.email == 'test@user.com')
+    #         self.assertFalse(user.paid)
+    #         self.assertFalse(user.admin)
 
-    def test_get_by_id(self):
-        # Ensure id is correct for the current/logged in user
-        with self.client:
-            self.client.post('/login', data=dict(
-                email='ad@min.com', password='admin_user'
-            ), follow_redirects=True)
-            self.assertTrue(current_user.id == 1)
+    # def test_get_by_id(self):
+    #     # Ensure id is correct for the current/logged in user
+    #     with self.client:
+    #         self.client.post('/login', data=dict(
+    #             email='test@tester.com', password='test_user'
+    #         ), follow_redirects=True)
+    #         self.assertTrue(current_user.id == 1)
 
     def test_registered_on_defaults_to_datetime(self):
         # Ensure that registered_on is a datetime

@@ -1,51 +1,61 @@
-{% extends "_base.html" %}
+{% extends '_base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
 
-<h1>Please Register</h1>
-<br>
-<form class="form-register" role="form" method="post" action="">
-  {{ form.csrf_token }}
-  <p>
-  {{ form.email.label }}
+  <header class="content-header">
+    <h1>Please Register</h1>
+  </header>
+
   <br>
-  {{ form.email(placeholder="email@address.com") }}
-    <span class="error">
-      {% if form.email.errors %}
-        {% for error in form.email.errors %}
-          {{ error }}
-        {% endfor %}
-      {% endif %}
-    </span>
-  </p>
-  <p>
-  {{ form.password.label }}
-  <br>
-  {{ form.password(placeholder="your password") }}
-    <span class="error">
-      {% if form.password.errors %}
-        {% for error in form.password.errors %}
-          {{ error }}
-        {% endfor %}
-      {% endif %}
-    </span>
-  </p>
-  <p>
-  {{ form.confirm.label }}
-  <br>
-  {{ form.confirm(placeholder="your password") }}
-    <span class="error">
-      {% if form.confirm.errors %}
-        {% for error in form.confirm.errors %}
-          {{ error }}
-        {% endfor %}
-      {% endif %}
-    </span>
-  </p>
-  <button class="btn btn-success" type="submit">Register!</button>
-  <br><br>
-  <p><em>Already registered? Click <a href="login">here</a> to login.</em></p>
-</form>
+
+  <form class="form" id="payment-form" role="form" method="POST" action="" data-stripe-publishable-key={{key}}>
+
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+    {{ wtf.form_errors(form, hiddens=True) }}
+
+    <div class="row">
+
+      <div class="col-lg-4 col-sm-4">
+
+        {{ wtf.form_field(form.email) }}
+        {{ wtf.form_field(form.password) }}
+        {{ wtf.form_field(form.confirm) }}
+
+        <br><br>
+
+        <button class="btn btn-success btn-lg" type="submit">Register!</button>
+        <br><br>
+        <p>Already have an account? <a href="{{ url_for('user.login') }}">Sign in</a>.</p>
+
+      </div>
+
+      <div class="col-lg-4 col-sm-4">
+
+        {{ wtf.form_field(form.card_number, **{'data-stripe': 'number'}) }}
+        {{ wtf.form_field(form.cvc, **{'data-stripe': 'cvc'}) }}
+        {{ wtf.form_field(form.expiration_month, **{'data-stripe': 'exp_month'}) }}
+        {{ wtf.form_field(form.expiration_year, **{'data-stripe': 'exp_year'}) }}
+
+        <br>
+
+        <div id="errors">
+          <br>
+          <span class='payment-errors alert'></span>
+          <br><br>
+        </div>
+
+      </div>
+
+    </div>
+
+  </form>
 
 
+{% endblock content %}
+
+{% block js %}
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+  <script src="{{url_for('static', filename='member.js')}}" type="text/javascript"></script>
 {% endblock %}

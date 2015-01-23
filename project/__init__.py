@@ -12,6 +12,7 @@ from flask.ext.login import LoginManager
 from flask.ext.bcrypt import Bcrypt
 from flask_mail import Mail
 from flask.ext.debugtoolbar import DebugToolbarExtension
+from flask_bootstrap import Bootstrap
 from flask.ext.sqlalchemy import SQLAlchemy
 
 
@@ -37,6 +38,7 @@ login_manager.init_app(app)
 bcrypt = Bcrypt(app)
 mail = Mail(app)
 toolbar = DebugToolbarExtension(app)
+bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
 
 
@@ -57,6 +59,7 @@ app.register_blueprint(user_blueprint)
 from models import User
 
 login_manager.login_view = "user.login"
+login_manager.login_message_category = 'danger'
 
 
 @login_manager.user_loader

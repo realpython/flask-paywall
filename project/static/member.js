@@ -1,12 +1,12 @@
 // stripe functionality
 
-$('#errors').hide()
+$('#errors').hide();
 
 $(function($) {
 
   $('#payment-form').submit(function(e) {
-    e.preventDefault()
-    $('#errors').hide()
+    e.preventDefault();
+    $('#errors').hide();
     var $form = $(this);
     Stripe.setPublishableKey($form.data('stripe-publishable-key'));
     // Disable the submit button to prevent repeated clicks
@@ -21,8 +21,8 @@ $(function($) {
 
     if (response.error) {
       // Show the errors on the form
-      $('#errors').show()
-      $form.find('.payment-errors').text(response.error.message);
+      $('#errors').show();
+      $form.find('.payment-errors').text(response.error.message).addClass('alert-danger');
       $form.find('button').prop('disabled', false);
     } else {
       // response contains id and card, which contains additional card details
@@ -32,6 +32,6 @@ $(function($) {
       // and submit
       $form.get(0).submit();
     }
-  };
+  }
 
 });

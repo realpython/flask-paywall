@@ -14,11 +14,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        {% if current_user.is_authenticated() %}
-          <li><a href="{{ url_for('user.members') }}">Members</a></li>
-        {% endif %}
         {% if current_user.is_authenticated() and current_user.paid %}
-          <li><a href="{{ url_for('user.premium') }}">Premium</a></li>
+          <li><a href="{{ url_for('user.members') }}">Members</a></li>
         {% endif %}
       </ul>
       <ul class="nav navbar-nav navbar-right">

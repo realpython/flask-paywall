@@ -17,20 +17,10 @@ class BaseConfig(object):
 class DevelopmentConfig(BaseConfig):
     """Development configuration."""
     DEBUG = True
+    BCRYPT_LOG_ROUNDS = 1
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev.sqlite')
     DEBUG_TB_ENABLED = True
-    STRIPE_SECRET_KEY = 'test key'
-    STRIPE_PUBLISHABLE_KEY = 'test key'
-
-
-class TestingConfig(BaseConfig):
-    """Testing configuration."""
-    TESTING = True
-    DEBUG = True
-    BCRYPT_LOG_ROUNDS = 1
-    WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite://'
     STRIPE_SECRET_KEY = 'test key'
     STRIPE_PUBLISHABLE_KEY = 'test key'
 

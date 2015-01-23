@@ -3,18 +3,11 @@
 
 import unittest
 
-from project.util import BaseTestCase
+from base import BaseTestCase
 from project.user.forms import RegisterForm, LoginForm
 
 
 class TestRegisterForm(BaseTestCase):
-
-    def test_validate_success_register_form(self):
-        # Ensure correct data validates.
-        form = RegisterForm(
-            email='new@test.test',
-            password='example', confirm='example')
-        self.assertTrue(form.validate())
 
     def test_validate_invalid_password_format(self):
         # Ensure incorrect data does not validate.

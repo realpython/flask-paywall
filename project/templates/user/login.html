@@ -1,38 +1,33 @@
-{% extends "_base.html" %}
+{% extends '_base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
 
-<h1>Please login</h1>
-<br>
-<form class="form-signin" role="form" method="post" action="">
-  {{ form.csrf_token }}
-  <p>
-  {{ form.email.label }}
-  <br>
-  {{ form.email(placeholder="email@address.com") }}
-  <span class="error">
-    {% if form.email.errors %}
-      {% for error in form.email.errors %}
-        {{ error }}
-      {% endfor %}
-    {% endif %}
-  </span>
-  </p>
-  <p>
-  {{ form.password.label }}
-  <br>
-  {{ form.password(placeholder="your password") }}
-  <span class="error">
-    {% if form.password.errors %}
-      {% for error in form.password.errors %}
-        {{ error }}
-      {% endfor %}
-    {% endif %}
-  </span>
-  </p>
-  <button class="btn btn-success" type="submit">Sign in!</button>
-  <br><br>
-  <p><em>Need to <a href="{{ url_for('user.register') }}">Register</a>?</em></p>
-</form>
+  <header class="content-header">
+    <h1>Please login</h1>
+  </header>
 
-{% endblock %}
+  <br>
+
+
+  <form class="form" role="form" method="post" action="">
+
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+    {{ wtf.form_errors(form, hiddens="only") }}
+
+
+    <div class="col-lg-4 col-sm-4">
+
+      {{ wtf.form_field(form.email) }}
+      {{ wtf.form_field(form.password) }}
+
+      <button class="btn btn-success btn-lg" type="submit">Sign In!</button>
+      <br><br>
+      <p>Need to <a href="{{ url_for('user.register') }}">Register</a>?</p>
+    </div>
+
+  </form>
+
+
+{% endblock content %}
