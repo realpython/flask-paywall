@@ -3,11 +3,11 @@
 
 import datetime
 import unittest
+import stripe
 
 from flask.ext.login import current_user
 
 from base import BaseTestCase
-from project import bcrypt
 from project.models import User
 from project.user.forms import LoginForm
 
@@ -66,19 +66,38 @@ class TestUserBlueprint(BaseTestCase):
         response = self.client.get('/register', follow_redirects=True)
         self.assertIn('<h1>Please Register</h1>\n', response.data)
 
-    # def test_user_registration(self):
-    #     # Ensure registration behaves correctlys.
-    #     with self.client:
-    #         response = self.client.post(
-    #             '/register',
-    #             data=dict(email="test@tester.com", password="testing",
-    #                       confirm="testing"),
-    #             follow_redirects=True
-    #         )
-    #         self.assertIn('Welcome', response.data)
-    #         self.assertTrue(current_user.email == "test@tester.com")
-    #         self.assertTrue(current_user.is_active())
-    #         self.assertEqual(response.status_code, 200)
+    def test_user_registration_error(self):
+        # Ensure registration behaves correctly.
+        token = stripe.Token.create(
+            card={
+                'number': '4242424242424242',
+                'exp_month': '06',
+                'exp_year': str(datetime.datetime.today().year + 1),
+                'cvc': '123',
+            }
+        )
+        with self.client:
+            response = self.client.post(
+                '/register',
+                data=dict(
+                    email="new@tester.com",
+                    password="testing",
+                    confirm="testing",
+                    card_number="4242424242424242",
+                    cvc="123",
+                    expiration_month="01",
+                    expiration_year="2015",
+                    stripeToken=token.id,
+                ),
+                follow_redirects=True
+            )
+            user = User.query.filter_by(email='new@tester.com').first()
+            self.assertEqual(user.email, 'new@tester.com')
+            self.assertTrue(user.paid)
+            self.assertIn('Thanks for paying!', response.data)
+            self.assertTrue(current_user.email == "new@tester.com")
+            self.assertTrue(current_user.is_active())
+            self.assertEqual(response.status_code, 200)
 
 
 if __name__ == '__main__':
