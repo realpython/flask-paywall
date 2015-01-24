@@ -63,7 +63,8 @@ class TestUserBlueprint(BaseTestCase):
                 data=dict(email="unpaid@testing.com", password="testing"),
                 follow_redirects=True
             )
-            self.assertIn('Sorry. You must pay to access this page.', response.data)
+            self.assertIn(
+                'Sorry. You must pay to access this page.', response.data)
 
     def test_validate_success_login_form(self):
         # Ensure correct data validates.
