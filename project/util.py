@@ -12,7 +12,7 @@ def check_paid(func):
     def decorated_function(*args, **kwargs):
         if current_user.paid is False:
             flash("Sorry. You must pay to access this page.", 'danger')
-            return redirect(url_for('user.members'))
+            return redirect(url_for('user.register'))
         return func(*args, **kwargs)
 
     return decorated_function

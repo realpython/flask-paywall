@@ -8,6 +8,7 @@ import stripe
 from flask.ext.login import current_user
 
 from base import BaseTestCase
+from project import db
 from project.models import User
 from project.user.forms import LoginForm
 
@@ -42,14 +43,27 @@ class TestUserBlueprint(BaseTestCase):
             self.assertFalse(current_user.is_active())
 
     def test_logout_route_requires_login(self):
-        # Ensure logout route requres logged in user.
+        # Ensure logout route requires logged in user.
         response = self.client.get('/logout', follow_redirects=True)
         self.assertIn('Please log in to access this page', response.data)
 
     def test_member_route_requires_login(self):
-        # Ensure member route requres logged in user.
+        # Ensure member route requires logged in user.
         response = self.client.get('/members', follow_redirects=True)
         self.assertIn('Please log in to access this page', response.data)
+
+    def test_member_route_requires_payment(self):
+        # Ensure member route requires a paid user.
+        user = User(email="unpaid@testing.com", password="testing", paid=False)
+        db.session.add(user)
+        db.session.commit()
+        with self.client:
+            response = self.client.post(
+                '/login',
+                data=dict(email="unpaid@testing.com", password="testing"),
+                follow_redirects=True
+            )
+            self.assertIn('Sorry. You must pay to access this page.', response.data)
 
     def test_validate_success_login_form(self):
         # Ensure correct data validates.
