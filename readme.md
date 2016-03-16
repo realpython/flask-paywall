@@ -57,3 +57,5 @@ $ python manage.py cov
 1. change/update password
 1. logging
 1. admin charts
+1. upgrade to python 3/update dependencies
+1. add autoenv
